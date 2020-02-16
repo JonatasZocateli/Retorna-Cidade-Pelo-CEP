@@ -14,7 +14,11 @@ class CidadeController {
     fun obterCidade(@PathVariable cep: String) : String? {
         println("Obtendo cep $cep")
         val cidade = chamarServicoViaCep(cep)
-        return cidade.toString()
+        if(cidade != null) {
+            return formataSaida(cidade)
+        } else {
+            return  cidade.toString()
+        }
     }
 
     fun chamarServicoViaCep(cep: String) : Cidade? {
@@ -34,6 +38,13 @@ class CidadeController {
         }
 
         return null
+    }
+
+    fun formataSaida(enderecoParaFormatar: Cidade): String{
+
+        with(enderecoParaFormatar){
+            return("$logradouro, $bairro - $localidade/$uf")
+        }
 
     }
 }
